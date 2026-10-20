@@ -1,0 +1,52 @@
+# Все секреты берутся из файла .env (скопируйте .env.example в .env и заполните).
+# Без обязательных переменных docker compose не запустится — это сделано намеренно.
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: ihs-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: NEW_DB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d NEW_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ihs-network
+
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: ihs-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=NEW_DB;Username=postgres;Password=${POSTGRES_PASSWORD}"
+      Jwt__SecretKey: ${JWT_SECRET_KEY:?Задайте JWT_SECRET_KEY в .env (не короче 32 символов)}
+      Encryption__Key: ${ENCRYPTION_KEY:?Задайте ENCRYPTION_KEY в .env (32 байта в Base64)}
+      # Первый администратор (необязательно): создаётся при старте, если админа ещё нет
+      Admin__UserName: ${ADMIN_USERNAME:-}
+      Admin__Password: ${ADMIN_PASSWORD:-}
+    ports:
+      - "5214:8080"
+    networks:
+      - ihs-network
+
+volumes:
+  postgres_data:
+
+networks:
+  ihs-network:
+    driver: bridge

@@ -1,0 +1,44 @@
+# Build artifacts
+**/bin/
+**/obj/
+**/out/
+
+# Tests
+Backend.Tests/
+
+# IDE
+**/.vs/
+**/.vscode/
+**/.idea/
+*.user
+*.suo
+*.csproj.user
+
+# Git
+**/.git/
+**/.gitignore
+
+# Coverage
+**/coverage-report/
+**/coveragereport/
+**/TestResults/
+**/*.cobertura.xml
+
+# Logs
+**/logs/
+**/*.log
+
+# OS
+**/.DS_Store
+**/Thumbs.db
+
+# Docs
+*.md
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Old MVC (если остались)
+_old_controllers/

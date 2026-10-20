@@ -1,0 +1,76 @@
+.quantity-control {
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.quantity-btn {
+    width: 48px;
+    height: 48px;
+    background: white;
+    border: none;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #495057;
+}
+
+.quantity-btn:hover:not(:disabled) {
+    background: #007bff;
+    color: white;
+}
+
+.quantity-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.quantity-btn.minus {
+    border-right: 1px solid #dee2e6;
+}
+
+.quantity-btn.plus {
+    border-left: 1px solid #dee2e6;
+}
+
+.quantity-input {
+    width: 70px;
+    height: 48px;
+    border: none;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+    background: white;
+}
+
+.quantity-input:focus {
+    outline: none;
+}
+
+.quantity-input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.quantity-input::-webkit-inner-spin-button,
+.quantity-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+.quantity-value {
+    min-width: 30px;
+    text-align: center;
+    font-weight: 600;
+    padding: 0 10px;
+}

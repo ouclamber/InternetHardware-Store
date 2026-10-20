@@ -1,0 +1,47 @@
+.search-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.search-container {
+    padding-top: 20px;
+    padding-bottom: 60px;
+}
+
+.search-results-count {
+    color: #6c757d;
+    font-size: 15px;
+    margin: 0 0 15px 0;
+    font-weight: 500;
+}
+
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 16px;
+}
+
+.no-results h3 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.no-results p {
+    color: #6c757d;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+}

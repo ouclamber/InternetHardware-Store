@@ -1,0 +1,31 @@
+.error-message {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    border-radius: 12px;
+    border: 1px solid #f5c6cb;
+}
+
+.error-message p {
+    font-size: 18px;
+    color: #721c24;
+    margin-bottom: 20px;
+}
+
+.retry-btn {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2);
+}
+
+.retry-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}

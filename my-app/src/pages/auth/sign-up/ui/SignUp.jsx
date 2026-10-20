@@ -1,0 +1,274 @@
+import React, { Component } from 'react';
+import './SignUp.css';
+import {
+    TextField,
+    Button,
+    Alert,
+    CircularProgress,
+    Snackbar
+} from '@mui/material';
+import { withNavigate } from 'shared/lib/hoc/withNavigate';
+import AuthServices from 'shared/api/AuthServices';
+import { userStorage } from 'entities/user/lib/userStorage';
+
+const authService = new AuthServices();
+
+class SignUp extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            UserName: '',
+            Password: '',
+            ConfirmPassword: '',
+            UserNameFlag: false,
+            PasswordFlag: false,
+            ConfirmPasswordFlag: false,
+            UserNameError: '',
+            PasswordError: '',
+            ConfirmPasswordError: '',
+            GeneralError: '',
+            Loading: false,
+            SnackbarOpen: false,
+            SnackbarMessage: '',
+            SnackbarSeverity: 'success'
+        };
+    }
+
+    componentDidMount() {
+        this.setState({
+            UserName: '',
+            Password: '',
+            ConfirmPassword: '',
+            UserNameFlag: false,
+            PasswordFlag: false,
+            ConfirmPasswordFlag: false,
+            UserNameError: '',
+            PasswordError: '',
+            ConfirmPasswordError: '',
+            GeneralError: '',
+            Loading: false,
+            SnackbarOpen: false
+        });
+
+        userStorage.clear();
+
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            if (input) input.value = '';
+        });
+    }
+
+    handleCloseSnackbar = () => {
+        this.setState({ SnackbarOpen: false });
+    }
+
+    handleValues = (e) => {
+        const { name, value } = e.target;
+        this.setState({
+            [name]: value,
+            GeneralError: '',
+            [name + 'Flag']: false,
+            [name + 'Error']: ''
+        });
+    }
+
+    validateInputs = () => {
+        let isValid = true;
+
+        if (!this.state.UserName.trim()) {
+            this.setState({ UserNameFlag: true, UserNameError: 'Введите имя пользователя' });
+            isValid = false;
+        }
+        if (!this.state.Password) {
+            this.setState({ PasswordFlag: true, PasswordError: 'Введите пароль' });
+            isValid = false;
+        } else if (this.state.Password.length < 8) {
+            this.setState({ PasswordFlag: true, PasswordError: 'Пароль должен быть минимум 8 символов' });
+            isValid = false;
+        }
+        if (!this.state.ConfirmPassword) {
+            this.setState({ ConfirmPasswordFlag: true, ConfirmPasswordError: 'Подтвердите пароль' });
+            isValid = false;
+        } else if (this.state.Password !== this.state.ConfirmPassword) {
+            this.setState({ ConfirmPasswordFlag: true, ConfirmPasswordError: 'Пароли не совпадают' });
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    handleSubmit = async () => {
+        if (!this.validateInputs()) return;
+
+        this.setState({ Loading: true, GeneralError: '' });
+
+        let data = {
+            UserName: this.state.UserName.trim(),
+            Password: this.state.Password,
+            ConfirmPassword: this.state.ConfirmPassword,
+        };
+
+        try {
+            const response = await authService.SignUp(data);
+
+            if (response?.status === 200 || response?.status === 201) {
+                userStorage.clear();
+
+                this.setState({
+                    UserName: '',
+                    Password: '',
+                    ConfirmPassword: '',
+                            Loading: false,
+                    SnackbarOpen: true,
+                    SnackbarMessage: `Аккаунт "${this.state.UserName.trim()}" успешно создан! Перенаправление на страницу входа...`,
+                    SnackbarSeverity: 'success'
+                });
+
+                setTimeout(() => {
+                    this.props.navigate('/SignIn');
+                }, 2500);
+
+            } else {
+                const errorMsg = response?.data?.message || 'Ошибка регистрации';
+                this.setState({ GeneralError: errorMsg, Loading: false });
+            }
+        } catch (error) {
+            let errorMsg = 'Ошибка при регистрации';
+
+            if (error.response?.data) {
+                const data = error.response.data;
+                if (error.response.status === 409) {
+                    errorMsg = 'Пользователь с таким именем уже существует. Пожалуйста, выберите другое имя.';
+                    this.setState({ UserNameFlag: true, UserNameError: 'Имя уже занято' });
+                } else if (data.errors) {
+                    const errors = Object.values(data.errors).flat();
+                    errorMsg = errors[0] || data.message || 'Ошибка валидации';
+                } else {
+                    errorMsg = data.message || data.title || 'Ошибка регистрации';
+                }
+            } else if (error.request) {
+                errorMsg = 'Нет связи с сервером. Проверьте подключение.';
+            }
+
+            this.setState({ GeneralError: errorMsg, Loading: false });
+        }
+    }
+
+    handleSignIn = () => {
+        this.props.navigate('/SignIn');
+    }
+
+    render() {
+        const {
+            Loading,
+            GeneralError,
+            UserNameError,
+            PasswordError,
+            ConfirmPasswordError,
+            UserNameFlag,
+            PasswordFlag,
+            ConfirmPasswordFlag,
+            SnackbarOpen,
+            SnackbarMessage,
+            SnackbarSeverity
+        } = this.state;
+
+        return (
+            <div className='SignUp-Container'>
+                <Snackbar
+                    open={SnackbarOpen}
+                    autoHideDuration={3000}
+                    onClose={this.handleCloseSnackbar}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                >
+                    <Alert
+                        onClose={this.handleCloseSnackbar}
+                        severity={SnackbarSeverity}
+                        sx={{
+                            width: '100%',
+                            fontSize: '16px',
+                            '& .MuiAlert-message': {
+                                display: 'flex',
+                                alignItems: 'center'
+                            }
+                        }}
+                    >
+                        {SnackbarMessage}
+                    </Alert>
+                </Snackbar>
+
+                <div className='SignUp-SubContainer'>
+                    <div className='Header'>SignUp</div>
+                    <div className='Body'>
+                        <form className='form'>
+                            {GeneralError && (
+                                <Alert severity="error" sx={{ mb: 2, width: '300px' }}>
+                                    {GeneralError}
+                                </Alert>
+                            )}
+                            <TextField
+                                error={UserNameFlag}
+                                className='TextField'
+                                name='UserName'
+                                label="UserName"
+                                variant="outlined"
+                                size='small'
+                                value={this.state.UserName}
+                                onChange={this.handleValues}
+                                helperText={UserNameError}
+                                disabled={Loading}
+                            />
+                            <TextField
+                                error={PasswordFlag}
+                                className='TextField'
+                                name='Password'
+                                label="Password"
+                                variant="outlined"
+                                size='small'
+                                type="password"
+                                value={this.state.Password}
+                                onChange={this.handleValues}
+                                helperText={PasswordError}
+                                disabled={Loading}
+                            />
+                            <TextField
+                                error={ConfirmPasswordFlag}
+                                className='TextField'
+                                name='ConfirmPassword'
+                                label="Confirm Password"
+                                variant="outlined"
+                                size='small'
+                                type="password"
+                                value={this.state.ConfirmPassword}
+                                onChange={this.handleValues}
+                                helperText={ConfirmPasswordError}
+                                disabled={Loading}
+                            />
+                        </form>
+                    </div>
+                    <div className='buttons'>
+                        <Button
+                            className='Btn'
+                            color='primary'
+                            onClick={this.handleSignIn}
+                            disabled={Loading}
+                        >
+                            Sign In
+                        </Button>
+                        <Button
+                            className='Btn'
+                            variant="contained"
+                            color='primary'
+                            onClick={this.handleSubmit}
+                            disabled={Loading}
+                        >
+                            {Loading ? <CircularProgress size={24} /> : 'Sign Up'}
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+export default withNavigate(SignUp);

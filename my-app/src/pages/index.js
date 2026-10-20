@@ -1,0 +1,14 @@
+export { HomePage } from './home';
+export { Cart } from './cart';
+export { CheckoutPage } from './checkout';
+export { ProductPage } from './product-details';
+export { Profile } from './profile';
+export { SearchPage } from './search';
+export { AdminPanel } from './admin';
+export { SignIn } from './auth/sign-in';
+export { SignUp } from './auth/sign-up';
+export { Computer } from './catalog/computers';
+export { Labtop } from './catalog/laptops';
+export { Phone } from './catalog/phones';
+export { Speaker } from './catalog/speakers';
+export { Television } from './catalog/televisions';
