@@ -1,0 +1,102 @@
+.cart-notification {
+    position: fixed;
+    top: 96px;
+    right: 24px;
+    z-index: 9999;
+    animation: toastIn 0.55s var(--ease-spring, ease) both;
+}
+
+@keyframes toastIn {
+    from { opacity: 0; transform: translateX(110%) scale(0.9); }
+    to   { opacity: 1; transform: none; }
+}
+
+@keyframes toastProgress {
+    from { transform: scaleX(1); }
+    to   { transform: scaleX(0); }
+}
+
+.cart-notification-content {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 300px;
+    max-width: 380px;
+    padding: 16px 20px 18px 16px;
+    border-radius: 18px;
+    color: #fff;
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    box-shadow: 0 18px 40px rgba(40, 167, 69, 0.3), 0 4px 12px rgba(44, 62, 80, 0.1);
+}
+
+/* иконка-галочка */
+.cart-notification-content::before {
+    content: '✓';
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: 800;
+    background: rgba(255, 255, 255, 0.22);
+    animation: checkPop 0.5s 0.2s var(--ease-spring, ease) both;
+}
+
+/* полоска оставшегося времени */
+.cart-notification-content::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.6);
+    transform-origin: left;
+    animation: toastProgress 3s linear forwards;
+}
+
+.cart-notification-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.cart-notification-text strong {
+    margin-bottom: 2px;
+    font-size: 15px;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cart-notification-text span {
+    font-size: 13px;
+    opacity: 0.92;
+}
+
+.cart-notification--error .cart-notification-content {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    box-shadow: 0 18px 40px rgba(220, 53, 69, 0.3), 0 4px 12px rgba(44, 62, 80, 0.1);
+}
+
+.cart-notification--error .cart-notification-content::before {
+    content: '!';
+}
+
+@media (max-width: 768px) {
+    .cart-notification {
+        top: 80px;
+        right: 12px;
+        left: 12px;
+    }
+    .cart-notification-content {
+        min-width: auto;
+        max-width: none;
+    }
+}

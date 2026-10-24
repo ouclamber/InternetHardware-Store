@@ -1,0 +1,37 @@
+@Backend_HostAddress = http://localhost:5214
+@token = <вставьте token из ответа signin>
+
+### Health-check
+GET {{Backend_HostAddress}}/health/ready
+
+### Вход
+POST {{Backend_HostAddress}}/api/Auth/signin
+Content-Type: application/json
+
+{ "userName": "admin", "password": "<пароль>" }
+
+### Каталог: смартфоны в наличии, дешевле 100 000, сортировка по цене, 2-я страница
+GET {{Backend_HostAddress}}/api/Products/paged?categoryId=3&maxPrice=100000&inStockOnly=true&sort=price_asc&page=2&pageSize=6
+
+### Избранное
+PUT {{Backend_HostAddress}}/api/Wishlist/5
+Authorization: Bearer {{token}}
+
+###
+GET {{Backend_HostAddress}}/api/Wishlist
+Authorization: Bearer {{token}}
+
+### Админ: установить остаток
+PUT {{Backend_HostAddress}}/api/Products/5/stock
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "quantity": 25 }
+
+### Админ: заказы, ожидающие оплаты
+GET {{Backend_HostAddress}}/api/Admin/orders?status=pending&page=1&pageSize=20
+Authorization: Bearer {{token}}
+
+### Админ: отзывы на модерации
+GET {{Backend_HostAddress}}/api/Reviews/pending
+Authorization: Bearer {{token}}

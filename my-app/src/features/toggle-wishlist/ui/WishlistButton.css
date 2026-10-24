@@ -1,0 +1,78 @@
+.wishlist-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.94);
+    color: #c62828;
+    cursor: pointer;
+    transition: transform 0.3s var(--ease-spring, ease), background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.wishlist-btn svg {
+    transition: transform 0.35s var(--ease-spring, ease);
+}
+
+.wishlist-btn:hover:not(:disabled) {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(198, 40, 40, 0.2);
+}
+
+.wishlist-btn:active:not(:disabled) {
+    transform: scale(0.9);
+}
+
+/* «удар сердца» и вспышка-кольцо при добавлении */
+.wishlist-btn--active svg {
+    animation: heartbeat 0.8s ease-in-out;
+}
+
+.wishlist-btn--active::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    animation: heartRing 0.6s ease-out;
+}
+
+@keyframes heartRing {
+    from { box-shadow: 0 0 0 0 rgba(198, 40, 40, 0.45); }
+    to   { box-shadow: 0 0 0 14px rgba(198, 40, 40, 0); }
+}
+
+.wishlist-btn:focus-visible {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+.wishlist-btn:disabled {
+    opacity: 0.6;
+    cursor: progress;
+}
+
+.wishlist-btn--small {
+    width: 38px;
+    height: 38px;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.15);
+}
+
+.wishlist-btn--large {
+    padding: 11px 18px;
+    border: 1.5px solid rgba(198, 40, 40, 0.5);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.wishlist-btn--large:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: rgba(198, 40, 40, 0.06);
+}
+
+.wishlist-btn--active.wishlist-btn--large {
+    border-color: #c62828;
+    background: rgba(198, 40, 40, 0.08);
+}

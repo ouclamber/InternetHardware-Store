@@ -1,0 +1,231 @@
+/* Общие стили страниц входа и регистрации */
+
+.SignUp-Container {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    min-height: 100%;
+    width: 100%;
+    padding: 40px 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 50%, #2c3e50 100%);
+}
+
+/* плавающие светящиеся «пузыри» */
+.SignUp-Container::before,
+.SignUp-Container::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.SignUp-Container::before {
+    width: 520px;
+    height: 520px;
+    top: -180px;
+    left: -140px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 65%);
+    animation: float 14s ease-in-out infinite;
+}
+
+.SignUp-Container::after {
+    width: 440px;
+    height: 440px;
+    bottom: -160px;
+    right: -120px;
+    background: radial-gradient(circle, rgba(232, 244, 255, 0.25), rgba(232, 244, 255, 0) 65%);
+    animation: float 18s ease-in-out infinite reverse;
+}
+
+/* ---------- «Стеклянная» карточка ---------- */
+.SignUp-Container .SignUp-SubContainer {
+    position: relative;
+    width: 440px;
+    max-width: 100%;
+    padding: 36px 28px 28px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 30px 60px rgba(0, 32, 77, 0.35), 0 8px 20px rgba(0, 32, 77, 0.15);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    animation: authCardIn 0.8s var(--ease-spring, ease) both;
+    transition: box-shadow 0.4s ease, transform 0.4s var(--ease-out, ease);
+}
+
+@keyframes authCardIn {
+    from { opacity: 0; transform: translateY(30px) scale(0.95); }
+    to   { opacity: 1; transform: none; }
+}
+
+.SignUp-Container .SignUp-SubContainer:hover {
+    box-shadow: 0 36px 70px rgba(0, 32, 77, 0.4), 0 10px 24px rgba(0, 32, 77, 0.18);
+}
+
+/* ---------- Заголовок с логотипом ---------- */
+.SignUp-Container .SignUp-SubContainer .Header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    margin-bottom: 18px;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #2c3e50;
+    animation: riseIn 0.6s 0.2s var(--ease-out, ease) both;
+}
+
+.SignUp-Container .SignUp-SubContainer .Header::before {
+    content: '';
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='4' width='16' height='16' rx='2'/%3E%3Crect x='9' y='9' width='6' height='6'/%3E%3Cpath d='M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3'/%3E%3C/svg%3E") center / 30px no-repeat,
+        linear-gradient(135deg, #007bff, #0056b3);
+    box-shadow: 0 12px 24px rgba(0, 123, 255, 0.4);
+    order: -2;
+    animation: logoFloat 4s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50%      { transform: translateY(-6px) rotate(-6deg); }
+}
+
+.SignUp-Container .SignUp-SubContainer .Header::after {
+    content: 'HardWare Store';
+    order: -1;
+    margin: -4px 0 -6px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #007bff;
+}
+
+/* ---------- Форма ---------- */
+.SignUp-Container .SignUp-SubContainer .Body {
+    width: 100%;
+}
+
+.SignUp-Container .SignUp-SubContainer .Body .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.SignUp-Container .SignUp-SubContainer .Body .form > * {
+    animation: riseIn 0.5s var(--ease-out, ease) both;
+}
+
+.SignUp-Container .SignUp-SubContainer .Body .form > *:nth-child(1) { animation-delay: 0.3s; }
+.SignUp-Container .SignUp-SubContainer .Body .form > *:nth-child(2) { animation-delay: 0.38s; }
+.SignUp-Container .SignUp-SubContainer .Body .form > *:nth-child(3) { animation-delay: 0.46s; }
+.SignUp-Container .SignUp-SubContainer .Body .form > *:nth-child(4) { animation-delay: 0.54s; }
+.SignUp-Container .SignUp-SubContainer .Body .form > *:nth-child(5) { animation-delay: 0.62s; }
+
+.SignUp-Container .SignUp-SubContainer .Body .form .TextField {
+    width: 100%;
+    max-width: 340px;
+    margin: 10px 0;
+}
+
+/* Поля формы — см. shared/ui/Form/Form.css */
+.SignUp-Container .form-alert {
+    width: 100%;
+    max-width: 340px;
+    margin-bottom: 6px;
+}
+
+.SignUp-Container .SignUp-SubContainer .Body .form .Roles {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 6px;
+}
+
+.SignUp-Container .SignUp-SubContainer .Body .form .Role .RolesValue {
+    width: 100%;
+}
+
+/* ---------- Кнопки ---------- */
+.SignUp-Container .SignUp-SubContainer .buttons {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 22px;
+    animation: riseIn 0.5s 0.7s var(--ease-out, ease) both;
+}
+
+.SignUp-Container .SignUp-SubContainer .buttons .Btn {
+    width: 100%;
+    max-width: 340px;
+    border-radius: 14px;
+    text-transform: none;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    transition: transform 0.3s var(--ease-spring, ease), box-shadow 0.3s ease, background-color 0.25s ease;
+}
+
+.SignUp-Container .buttons .Btn.form-btn--contained {
+    position: relative;
+    overflow: hidden;
+    padding: 11px 16px;
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    box-shadow: 0 10px 22px rgba(0, 123, 255, 0.35);
+}
+
+.SignUp-Container .buttons .Btn.form-btn--contained::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 40%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transform: translateX(-150%) skewX(-20deg);
+    animation: shine 3.5s 1.5s ease-in-out infinite;
+}
+
+.SignUp-Container .buttons .Btn.form-btn--contained:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(0, 123, 255, 0.42);
+}
+
+.SignUp-Container .buttons .Btn.form-btn--contained:active {
+    transform: scale(0.98);
+}
+
+.SignUp-Container .buttons .Btn.form-btn--contained:disabled {
+    background: #e9ecef;
+    box-shadow: none;
+}
+
+.SignUp-Container .buttons .Btn.form-btn--text {
+    padding: 9px 16px;
+    color: #0056b3;
+}
+
+.SignUp-Container .buttons .Btn.form-btn--text:hover {
+    background: #e8f4ff;
+}
+
+@media (max-width: 480px) {
+    .SignUp-Container .SignUp-SubContainer {
+        padding: 28px 18px 22px;
+        border-radius: 22px;
+    }
+}

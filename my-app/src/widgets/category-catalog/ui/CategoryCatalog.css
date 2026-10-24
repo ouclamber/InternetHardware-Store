@@ -1,0 +1,75 @@
+/* «Только в наличии» — переключатель вместо чекбокса */
+.stock-filter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #495057;
+    user-select: none;
+}
+
+.stock-filter input[type='checkbox'] {
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+    flex-shrink: 0;
+    width: 42px;
+    height: 24px;
+    margin: 0;
+    border-radius: 999px;
+    background: #dee2e6;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stock-filter input[type='checkbox']::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(44, 62, 80, 0.2);
+    transition: transform 0.35s var(--ease-spring, ease);
+}
+
+.stock-filter input[type='checkbox']:checked {
+    background: linear-gradient(135deg, #28a745, #20c997);
+}
+
+.stock-filter input[type='checkbox']:checked::after {
+    transform: translateX(18px);
+}
+
+.stock-filter input[type='checkbox']:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.18);
+}
+
+.filter-hint {
+    margin: 8px 0 0;
+    font-size: 13px;
+    animation: fadeIn 0.3s ease both;
+}
+
+.filter-hint--error {
+    color: #d32f2f;
+}
+
+.catalog-results-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 18px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #0056b3;
+    background: #e8f4ff;
+    animation: popIn 0.4s var(--ease-spring, ease) both;
+}

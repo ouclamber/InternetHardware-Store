@@ -1,0 +1,279 @@
+/* ---------- Шапка: «стеклянная» панель ---------- */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.78);
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
+    backdrop-filter: saturate(180%) blur(16px);
+    border-bottom: 1px solid rgba(0, 123, 255, 0.08);
+    box-shadow: 0 6px 24px rgba(44, 62, 80, 0.06);
+    animation: fadeInDown 0.6s var(--ease-out, ease) both;
+}
+
+/* тонкая анимированная полоса градиента снизу */
+.header::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    /* статичная линия: анимация фона внутри шапки с backdrop-filter перерисовывала её каждый кадр */
+    background: linear-gradient(90deg, transparent, #007bff, #0056b3, #007bff, transparent);
+    opacity: 0.55;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+}
+
+/* ---------- Логотип ---------- */
+.nav__logo {
+    position: relative;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.3s var(--ease-spring, ease);
+}
+
+.nav__logo::before {
+    content: '';
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='4' width='16' height='16' rx='2'/%3E%3Crect x='9' y='9' width='6' height='6'/%3E%3Cpath d='M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3'/%3E%3C/svg%3E") center / 60% no-repeat,
+        linear-gradient(135deg, #007bff, #0056b3);
+    box-shadow: 0 6px 14px rgba(0, 123, 255, 0.35);
+    flex-shrink: 0;
+    transition: transform 0.5s var(--ease-spring, ease);
+}
+
+.nav__logo:hover {
+    transform: translateY(-1px);
+}
+
+.nav__logo:hover::before {
+    transform: rotate(-12deg) scale(1.08);
+}
+
+.logo-text {
+    display: inline-flex;
+    align-items: baseline;
+}
+
+.logo-primary {
+    color: #007bff;
+    background: linear-gradient(90deg, #007bff 0%, #0056b3 40%, #007bff 60%, #0056b3 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav__logo:hover .logo-primary {
+    animation: shimmerText 1.2s linear infinite;
+}
+
+.logo-secondary {
+    color: #2c3e50;
+    margin-left: 2px;
+}
+
+/* ---------- Поиск ---------- */
+.search-full-width {
+    flex-grow: 1;
+    margin: 0 32px;
+    max-width: 600px;
+}
+
+.header-search-block form {
+    position: relative;
+}
+
+/* иконка-лупа */
+.header-search-block form::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+    transform: translateY(-50%);
+    background-color: #adb5bd;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") center / contain no-repeat;
+    transition: background-color 0.3s ease, transform 0.3s var(--ease-spring, ease);
+    pointer-events: none;
+}
+
+.header-search-block form:focus-within::before {
+    background-color: #007bff;
+    transform: translateY(-50%) scale(1.12);
+}
+
+.header-search-block__search {
+    width: 100%;
+    padding: 12px 20px 12px 48px;
+    border: 1.5px solid #e9ecef;
+    border-radius: 999px;
+    font-size: 15px;
+    color: #2c3e50;
+    background-color: #f8f9fa;
+    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header-search-block__search::placeholder {
+    color: #adb5bd;
+}
+
+.header-search-block__search:hover {
+    border-color: #dee2e6;
+    background-color: #fff;
+}
+
+.header-search-block__search:focus {
+    outline: none;
+    border-color: #007bff;
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.12), 0 8px 20px rgba(0, 123, 255, 0.1);
+}
+
+/* ---------- Иконки ---------- */
+.header-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.icon-btn {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 14px;
+    background: transparent;
+    color: #495057;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease, transform 0.3s var(--ease-spring, ease), box-shadow 0.25s ease;
+}
+
+.icon-btn svg {
+    transition: transform 0.35s var(--ease-spring, ease);
+}
+
+.icon-btn:hover {
+    background-color: #e8f4ff;
+    color: #007bff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 123, 255, 0.15);
+}
+
+.icon-btn:hover svg {
+    transform: scale(1.1);
+}
+
+.icon-btn:active {
+    transform: translateY(0) scale(0.94);
+}
+
+.user-icon:hover svg {
+    animation: wiggle 0.5s ease;
+}
+
+.cart-icon:hover svg {
+    transform: translateX(2px) rotate(-6deg) scale(1.1);
+}
+
+.wishlist-icon {
+    color: #c62828;
+}
+
+.wishlist-icon:hover {
+    background-color: rgba(198, 40, 40, 0.08);
+    color: #c62828;
+    box-shadow: 0 6px 14px rgba(198, 40, 40, 0.15);
+}
+
+.wishlist-icon:hover svg {
+    animation: heartbeat 1s ease-in-out infinite;
+}
+
+/* ---------- Счётчики ---------- */
+.wishlist-badge,
+.cart-count {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 999px;
+    border: 2px solid #fff;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 16px;
+    text-align: center;
+    animation: badgePop 0.45s var(--ease-spring, ease) both;
+}
+
+.wishlist-badge {
+    background: #c62828;
+    box-shadow: 0 3px 8px rgba(198, 40, 40, 0.35);
+}
+
+.cart-count {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    box-shadow: 0 3px 8px rgba(0, 123, 255, 0.35);
+}
+
+.cart-count[data-empty='true'] {
+    background: #adb5bd;
+    box-shadow: none;
+    transform: scale(0.85);
+    animation: none;
+}
+
+/* ---------- Адаптив ---------- */
+@media (max-width: 768px) {
+    .search-full-width {
+        margin: 0 14px;
+    }
+    .header-icons {
+        gap: 4px;
+    }
+    .nav__logo {
+        font-size: 20px;
+    }
+    .nav__logo::before {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 12px 16px;
+    }
+    .search-full-width {
+        order: 3;
+        width: 100%;
+        max-width: none;
+        margin: 4px 0 0 0;
+    }
+}

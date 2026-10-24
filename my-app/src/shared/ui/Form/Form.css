@@ -1,0 +1,261 @@
+/* ---------- Поле ввода с «плавающей» подписью ---------- */
+.form-field {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-field__input {
+    width: 100%;
+    height: 48px;
+    padding: 18px 14px 6px;
+    border: 1.5px solid #e9ecef;
+    border-radius: 14px;
+    background: #f8f9fa;
+    color: #2c3e50;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.form-field__input:hover:not(:disabled) {
+    background: #fff;
+    border-color: #dee2e6;
+}
+
+.form-field__input:focus {
+    background: #fff;
+    border-color: #007bff;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.12);
+}
+
+.form-field__input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.form-field__label {
+    position: absolute;
+    left: 15px;
+    top: 14px;
+    color: #6c757d;
+    font-size: 15px;
+    pointer-events: none;
+    transform-origin: left top;
+    transition: transform 0.2s var(--ease-out, ease), color 0.2s ease;
+}
+
+/* подпись уезжает вверх при фокусе или заполненном поле */
+.form-field__input:focus + .form-field__label,
+.form-field__input:not(:placeholder-shown) + .form-field__label {
+    transform: translateY(-9px) scale(0.78);
+}
+
+.form-field__input:focus + .form-field__label {
+    color: #007bff;
+}
+
+.form-field__helper {
+    margin: 6px 4px 0;
+    font-size: 12.5px;
+    color: #6c757d;
+}
+
+.form-field--error .form-field__input {
+    border-color: #dc3545;
+    animation: fieldShake 0.4s ease;
+}
+
+.form-field--error .form-field__input:focus {
+    box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.12);
+}
+
+.form-field--error .form-field__label,
+.form-field--error .form-field__helper {
+    color: #dc3545;
+}
+
+@keyframes fieldShake {
+    0%, 100% { translate: 0 0; }
+    20%      { translate: -6px 0; }
+    40%      { translate: 6px 0; }
+    60%      { translate: -4px 0; }
+    80%      { translate: 4px 0; }
+}
+
+/* ---------- Радио-кнопки ---------- */
+.form-radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.form-choice {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px 8px 10px;
+    border: 1.5px solid #e9ecef;
+    border-radius: 999px;
+    cursor: pointer;
+    color: #495057;
+    font-size: 15px;
+    user-select: none;
+    transition: border-color 0.25s ease, background-color 0.25s ease, color 0.25s ease, transform 0.3s var(--ease-spring, ease);
+}
+
+.form-choice:hover {
+    border-color: rgba(0, 123, 255, 0.4);
+    background: #e8f4ff;
+    transform: translateY(-1px);
+}
+
+.form-choice--checked {
+    border-color: #007bff;
+    background: #e8f4ff;
+    color: #0056b3;
+}
+
+.form-choice__input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: #007bff;
+    cursor: pointer;
+}
+
+/* ---------- Кнопки ---------- */
+.form-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 9px 18px;
+    border: none;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s var(--ease-spring, ease), box-shadow 0.3s ease, background-color 0.25s ease;
+}
+
+.form-btn:disabled {
+    cursor: not-allowed;
+}
+
+.form-btn--text {
+    color: #0056b3;
+    background: transparent;
+}
+
+.form-btn--text:hover:not(:disabled) {
+    background: #e8f4ff;
+}
+
+.form-btn--contained {
+    overflow: hidden;
+    color: #fff;
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    box-shadow: 0 10px 22px rgba(0, 123, 255, 0.35);
+}
+
+.form-btn--contained:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(0, 123, 255, 0.42);
+}
+
+.form-btn--contained:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+.form-btn--contained:disabled {
+    background: #e9ecef;
+    box-shadow: none;
+}
+
+/* ---------- Индикатор загрузки ---------- */
+.form-progress {
+    display: inline-block;
+    border-radius: 50%;
+    border: 3px solid rgba(0, 123, 255, 0.2);
+    border-top-color: #007bff;
+    animation: spin 0.8s linear infinite;
+}
+
+/* ---------- Сообщения ---------- */
+.form-alert {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    font-size: 14px;
+    line-height: 1.4;
+    animation: fadeIn 0.3s ease both;
+}
+
+.form-alert__message {
+    flex: 1;
+}
+
+.form-alert__close {
+    border: none;
+    background: none;
+    color: inherit;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.form-alert__close:hover {
+    opacity: 1;
+}
+
+.form-alert--error {
+    color: #c82333;
+    background: rgba(220, 53, 69, 0.08);
+    border: 1px solid rgba(220, 53, 69, 0.2);
+}
+
+.form-alert--success {
+    color: #155724;
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+
+.form-alert--info,
+.form-alert--warning {
+    color: #0056b3;
+    background: #e8f4ff;
+    border: 1px solid rgba(0, 123, 255, 0.2);
+}
+
+/* всплывающее сообщение сверху по центру */
+.form-snackbar {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    z-index: 2000;
+    width: max-content;
+    max-width: calc(100vw - 32px);
+    transform: translateX(-50%);
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(0, 32, 77, 0.25);
+    animation: snackbarIn 0.45s var(--ease-spring, ease) both;
+}
+
+.form-snackbar .form-alert {
+    background-color: #fff;
+}
+
+.form-snackbar .form-alert--success {
+    background: #d4edda;
+}
+
+@keyframes snackbarIn {
+    from { opacity: 0; translate: 0 -16px; }
+    to   { opacity: 1; translate: none; }
+}

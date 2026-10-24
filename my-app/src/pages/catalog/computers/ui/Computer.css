@@ -1,0 +1,8 @@
+.computer-page {
+    min-height: 100vh;
+}
+
+.computer-container {
+    padding-top: 28px;
+    padding-bottom: 56px;
+}

@@ -1,0 +1,62 @@
+.search-page {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.search-container {
+    padding-top: 20px;
+    padding-bottom: 60px;
+}
+
+.search-results-count {
+    color: #6c757d;
+    font-size: 15px;
+    margin: 0 0 15px 0;
+    font-weight: 500;
+}
+
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 16px;
+}
+
+.no-results h3 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.no-results p {
+    color: #6c757d;
+    margin: 0;
+}
+
+/* ===== Редизайн 1.2.1 ===== */
+.search-page {
+    background-color: transparent;
+}
+
+.search-container {
+    padding-top: 28px;
+    padding-bottom: 64px;
+}
+
+.search-results-count {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #0056b3;
+    background: #e8f4ff;
+    animation: popIn 0.4s var(--ease-spring, ease) both;
+}
+
+.no-results {
+    border-radius: 24px;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 10px 28px rgba(44, 62, 80, 0.06);
+    animation: popIn 0.5s var(--ease-spring, ease) both;
+}

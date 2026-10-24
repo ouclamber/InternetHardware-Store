@@ -1,0 +1,125 @@
+.checkout-steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.step-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    background: #e9ecef;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #6c757d;
+    transition: all 0.3s ease;
+}
+
+.step-indicator.active .step-number {
+    background: #007bff;
+    color: white;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2);
+}
+
+.step-label {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.step-indicator.active .step-label {
+    color: #007bff;
+    font-weight: 500;
+}
+
+.step-line {
+    width: 80px;
+    height: 2px;
+    background: #e9ecef;
+    margin: 0 15px;
+}
+
+@media (max-width: 992px) {
+    .step-line { width: 40px; }
+}
+
+@media (max-width: 768px) {
+    .checkout-steps {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .step-line { display: none; }
+}
+/* ===== Редизайн 1.2.1 ===== */
+.checkout-steps {
+    padding: 18px 24px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 8px 22px rgba(44, 62, 80, 0.06);
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    animation: riseIn 0.5s var(--ease-out, ease) both;
+}
+
+.step-indicator {
+    flex-direction: row;
+    gap: 10px;
+}
+
+.step-number {
+    width: 36px;
+    height: 36px;
+    font-weight: 700;
+    transition: background 0.4s ease, color 0.4s ease, box-shadow 0.4s ease, transform 0.4s var(--ease-spring, ease);
+}
+
+.step-indicator.active .step-number {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    box-shadow: 0 6px 14px rgba(0, 123, 255, 0.35);
+    animation: badgePop 0.45s var(--ease-spring, ease);
+}
+
+/* текущий (последний активный) шаг пульсирует */
+.step-indicator.active:not(:has(~ .step-indicator.active)) .step-number {
+    animation: badgePop 0.45s var(--ease-spring, ease), pulseRing 1.8s 0.5s ease-out infinite;
+}
+
+.step-label {
+    font-weight: 600;
+}
+
+/* линия-прогресс заполняется к следующему активному шагу */
+.step-line {
+    width: 64px;
+    height: 4px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #007bff, #0056b3) left / 0% 100% no-repeat, #e9ecef;
+    transition: background-size 0.6s var(--ease-out, ease);
+}
+
+.step-line:has(+ .step-indicator.active) {
+    background-size: 100% 100%, auto;
+}
+
+@media (max-width: 992px) {
+    .step-line { width: 32px; }
+}
+
+@media (max-width: 768px) {
+    .checkout-steps {
+        border-radius: 22px;
+    }
+    .step-line { display: none; }
+}
